@@ -6,7 +6,7 @@
     <meta name="description" content="Mural de opiniões dos professores da turma 1º A.">
     <title>Mural dos Professores | 1º A</title>
     
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS (v3.4) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -38,32 +38,29 @@
             }
         }
     </script>
-
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
-
     <style>
         /* 
            FEITO POR FELIPE VEÇOSKI 1°DS 
+           OTIMIZADO PARA PERFORMANCE WEB
         */
-
-        /* Otimização de Scroll e Renderização */
+        /* Otimização de Renderização Global */
         html {
             scroll-behavior: smooth;
         }
-
         body {
             background-color: #c19a6b;
             background-image: url('fundo-cortica.webp');
-            background-attachment: fixed;
+            background-attachment: fixed; 
             background-size: 400px;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            transform: translateZ(0); /* Camada de composição */
         }
-
         /* Vinheta Cinemática */
         body::after {
             content: "";
@@ -73,8 +70,7 @@
             pointer-events: none;
             z-index: 0;
         }
-
-        /* Scrollbar Personalizada (Tema Cortiça) */
+        /* Scrollbar Personalizada */
         ::-webkit-scrollbar {
             width: 12px;
         }
@@ -86,14 +82,12 @@
             border-radius: 6px;
             border: 3px solid #d2b48c;
         }
-
-        /* Efeito de Papel Rasgado & Textura */
+        /* Efeito de Papel Rasgado */
         .torn-paper {
             background-image: url('papel-pautado.webp'); 
             background-size: 100% auto;
             background-color: #fffdf0;
             position: relative;
-            /* Recorte irregular na base */
             clip-path: polygon(
                 0% 0%, 100% 0%, 100% 98%, 
                 97% 99%, 94% 98%, 91% 99%, 88% 98%, 
@@ -106,9 +100,10 @@
                 13% 99%, 10% 98%, 7% 99%, 4% 98%, 
                 1% 99%, 0% 98%
             );
+            transform: translateZ(0);
         }
         
-        /* Ruído subtil para textura de papel velho */
+        /* Ruído Otimizado (SVG Data URI) */
         .torn-paper::before {
             content: "";
             position: absolute;
@@ -116,83 +111,82 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
             pointer-events: none;
             mix-blend-mode: multiply;
+            z-index: 1;
         }
-
-        /* Texto Tinta Realista */
+        /* Texto Tinta */
         .ink-text {
             color: #1a202c;
             mix-blend-mode: multiply; 
             line-height: 1.6;
+            text-rendering: optimizeLegibility;
         }
-
-        /* Cards e Animações 3D */
+        /* 
+           Container dos Cards 
+           IMPORTANTE: Removido contain/content-visibility para evitar cortes nos alfinetes
+        */
         .card-container {
-            perspective: 1000px; /* Profundidade 3D essencial */
+            perspective: 1000px;
         }
-
         .polaroid-wrap {
-            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease;
-            transform-style: preserve-3d; /* Garante que elementos filhos também sejam 3D */
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+            transform-style: preserve-3d;
             will-change: transform;
+            background: white;
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
         
-        .polaroid-wrap:hover {
-            /* Efeito de levantar da mesa e "endireitar" */
-            transform: scale(1.02) translateY(-10px) rotate(0deg) !important;
-            z-index: 50;
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
+        /* Hover somente em desktop para performance */
+        @media (hover: hover) {
+            .polaroid-wrap:hover {
+                transform: scale(1.02) translateY(-10px) rotate(0deg) !important;
+                z-index: 50;
+                box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+            }
         }
-
-        /* Alfinete flutuante */
+        /* Alfinete */
         .pin-shadow {
             filter: drop-shadow(3px 5px 3px rgba(0,0,0,0.4));
-            z-index: 20; /* Sempre acima da foto */
+            z-index: 20;
+            pointer-events: none;
         }
-
-        /* Fita Adesiva (CSS Puro) */
+        /* Fita Adesiva OTIMIZADA (Sem backdrop-filter) */
         .tape-strip {
-            background-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            backdrop-filter: blur(1px);
-            border: 1px solid rgba(255,255,255,0.2);
+            background-color: rgba(255, 255, 255, 0.6); /* Opaco para ser leve */
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
             transform: rotate(-2deg);
         }
-
-        /* Rotações Naturais (Com Variáveis para Animação) */
+        /* Rotações Variáveis */
         .rotate-var-1 { --rotate-val: 2.5deg; }
         .rotate-var-2 { --rotate-val: -2deg; }
         .rotate-var-3 { --rotate-val: 1.5deg; }
         .rotate-var-4 { --rotate-val: -3deg; }
-
-        /* Lógica "Ler Mais" Suave */
+        /* Lógica Ler Mais */
         .read-more-wrap {
             position: relative;
             overflow: hidden;
-            max-height: 160px; /* Altura inicial */
-            transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 160px;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: max-height;
         }
-
         .read-more-wrap.expanded {
-            max-height: 2000px; /* Altura "infinita" */
+            max-height: 2000px;
         }
-
         .read-more-wrap::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 100px;
+            height: 80px;
             background: linear-gradient(to bottom, transparent, #fffdf0 90%);
             pointer-events: none;
-            opacity: 1;
-            transition: opacity 0.5s;
+            transition: opacity 0.3s;
         }
-
         .read-more-wrap.expanded::after {
             opacity: 0;
         }
-
         .read-more-btn {
             font-family: 'Permanent Marker', cursive;
             color: #c0392b;
@@ -201,42 +195,32 @@
             text-align: right;
             display: block;
             margin-top: 5px;
-            transition: transform 0.2s;
-            position: relative;
-            z-index: 10;
+            user-select: none;
         }
-
-        .read-more-btn:hover {
-            transform: scale(1.05) translateX(-5px);
-        }
-
         /* Animação de Entrada (Scroll Reveal) */
         .reveal-card {
             opacity: 0;
-            /* Começa deslocado e rodado */
-            transform: translateY(60px) rotate(var(--rotate-val, 0deg)); 
-            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1.2); /* Efeito elástico sutil */
+            transform: translateY(40px) rotate(var(--rotate-val, 0deg)); 
+            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1.2);
+            will-change: opacity, transform;
         }
         
         .reveal-card.active {
             opacity: 1;
-            /* Termina na posição original (mas mantendo a rotação 'torta') */
             transform: translateY(0) rotate(var(--rotate-val, 0deg));
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col relative text-stone-800">
-
     <!-- Cabeçalho -->
     <header class="relative z-20 pt-16 pb-10 px-4">
-        <div class="max-w-2xl mx-auto bg-[#fdfbf7] p-8 text-center shadow-[0_15px_30px_rgba(0,0,0,0.25)] transform -rotate-1 border-4 border-[#eaddcf] relative reveal-card active" style="--rotate-val: -1deg;">
+        <div class="max-w-2xl mx-auto bg-[#fdfbf7] p-8 text-center shadow-xl transform -rotate-1 border-4 border-[#eaddcf] relative reveal-card active" style="--rotate-val: -1deg;">
             
             <!-- Fita Adesiva Topo -->
             <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-10 tape-strip z-20"></div>
             
             <div class="absolute top-3 left-3 w-3 h-3 rounded-full bg-stone-300 shadow-inner border border-stone-400"></div>
             <div class="absolute top-3 right-3 w-3 h-3 rounded-full bg-stone-300 shadow-inner border border-stone-400"></div>
-
             <h1 class="text-4xl md:text-5xl font-marker text-stone-800 mb-3 tracking-wide drop-shadow-sm">
                 Nosso Mural
             </h1>
@@ -246,22 +230,21 @@
             </p>
         </div>
     </header>
-
     <!-- Mural Grid -->
     <main class="flex-grow w-full max-w-[1600px] mx-auto px-6 sm:px-8 pb-24 relative z-10" style="overflow: visible;">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-10 gap-y-20 pt-4">
-
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-10 gap-y-20 pt-12">
             <!-- CARD 1: JOANA (Destaque) -->
             <div class="card-container col-span-1 sm:col-span-2 lg:col-span-3 xl:col-span-4 flex justify-center mb-6">
-                <div class="reveal-card rotate-var-1 relative w-full max-w-4xl bg-white p-4 pb-16 shadow-polaroid polaroid-wrap flex flex-col md:flex-row gap-6">
+                <div class="reveal-card rotate-var-1 relative w-full max-w-4xl p-4 pb-16 shadow-polaroid polaroid-wrap flex flex-col md:flex-row gap-6">
                     <!-- Alfinete -->
                     <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-14 pin-shadow">
-                        <img src="alfinete.webp" alt="Alfinete" class="w-full h-auto block">
+                        <img src="alfinete.webp" width="56" height="56" alt="Alfinete" class="w-full h-auto block">
                     </div>
                     
                     <div class="w-full md:w-1/3 shrink-0 flex flex-col">
                         <div class="aspect-[4/5] bg-gray-100 border border-gray-200 shadow-inner overflow-hidden relative cursor-zoom-in group" onclick="openModal(this)">
-                            <img src="imagens/joana.webp" alt="Joana" class="w-full h-full object-cover object-top transition-transform duration-1000 group-hover:scale-110">
+                            <!-- Loading Eager (LCP) -->
+                            <img src="imagens/joana.webp" alt="Joana" loading="eager" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105">
                             <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
                         </div>
                         <div class="text-center mt-4">
@@ -269,7 +252,6 @@
                             <p class="font-hand font-bold text-2xl text-stone-500">Pedagoga</p>
                         </div>
                     </div>
-
                     <div class="w-full md:w-2/3 relative mt-2">
                         <div class="torn-paper p-8 shadow-md transform rotate-1 h-full flex flex-col justify-center">
                             <div class="read-more-wrap" id="wrap-joana">
@@ -282,15 +264,14 @@
                     </div>
                 </div>
             </div>
-
             <!-- CARD: PRISCILA -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-2 relative bg-white p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
+                <div class="reveal-card rotate-var-2 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
-                        <img src="alfinete.webp" alt="Alfinete">
+                        <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
                     <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/priscila.webp" alt="Priscila" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" loading="lazy">
+                        <img src="imagens/priscila.webp" alt="Priscila" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
                     </div>
                     <h3 class="font-marker text-2xl text-center">Priscila</h3>
                     <p class="font-hand font-bold text-red-600 text-center text-lg mb-4">Matemática - "Evolução"</p>
@@ -305,15 +286,14 @@
                     </div>
                 </div>
             </div>
-
             <!-- CARD: DAYANE -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-3 relative bg-white p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
+                <div class="reveal-card rotate-var-3 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
-                        <img src="alfinete.webp" alt="Alfinete">
+                        <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
                     <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/dayane_quimica.webp" alt="Dayane" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" loading="lazy">
+                        <img src="imagens/dayane_quimica.webp" alt="Dayane" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
                     </div>
                     <h3 class="font-marker text-2xl text-center">Dayane</h3>
                     <p class="font-hand font-bold text-blue-600 text-center text-lg mb-4">Química - "Média"</p>
@@ -328,15 +308,14 @@
                     </div>
                 </div>
             </div>
-
             <!-- CARD: THAIS -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-4 relative bg-white p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
+                <div class="reveal-card rotate-var-4 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
-                        <img src="alfinete.webp" alt="Alfinete">
+                        <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
                     <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/thais.webp" alt="Thais" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" loading="lazy">
+                        <img src="imagens/thais.webp" alt="Thais" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
                     </div>
                     <h3 class="font-marker text-2xl text-center">Thaís</h3>
                     <p class="font-hand font-bold text-purple-600 text-center text-lg mb-4">Inglês - "Decepção"</p>
@@ -351,15 +330,14 @@
                     </div>
                 </div>
             </div>
-
             <!-- CARD: ALINE -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-1 relative bg-white p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
+                <div class="reveal-card rotate-var-1 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
-                        <img src="alfinete.webp" alt="Alfinete">
+                        <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
                     <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/aline.webp" alt="Aline" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" loading="lazy">
+                        <img src="imagens/aline.webp" alt="Aline" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
                     </div>
                     <h3 class="font-marker text-2xl text-center">Aline</h3>
                     <p class="font-hand font-bold text-green-600 text-center text-lg mb-4">Ed. Física - "Boas"</p>
@@ -374,15 +352,14 @@
                     </div>
                 </div>
             </div>
-
             <!-- CARD: WENDELL -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-2 relative bg-white p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
+                <div class="reveal-card rotate-var-2 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
-                        <img src="alfinete.webp" alt="Alfinete">
+                        <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
                     <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/wendell.webp" alt="Wendell" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" loading="lazy">
+                        <img src="imagens/wendell.webp" alt="Wendell" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
                     </div>
                     <h3 class="font-marker text-2xl text-center">Wendell</h3>
                     <p class="font-hand font-bold text-pink-600 text-center text-lg mb-4">Artes - "9,5"</p>
@@ -397,15 +374,14 @@
                     </div>
                 </div>
             </div>
-
             <!-- CARD: JONATAN -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-3 relative bg-white p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
+                <div class="reveal-card rotate-var-3 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
-                        <img src="alfinete.webp" alt="Alfinete">
+                        <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
                     <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/jonatan.webp" alt="Jonatan" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" loading="lazy">
+                        <img src="imagens/jonatan.webp" alt="Jonatan" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
                     </div>
                     <h3 class="font-marker text-2xl text-center">Jonatan</h3>
                     <p class="font-hand font-bold text-orange-600 text-center text-lg mb-4">Proj. Vida - "Desafio"</p>
@@ -420,15 +396,14 @@
                     </div>
                 </div>
             </div>
-
             <!-- CARD: SILMARA -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-4 relative bg-white p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
+                <div class="reveal-card rotate-var-4 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
-                        <img src="alfinete.webp" alt="Alfinete">
+                        <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
                     <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/silmara.webp" alt="Silmara" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" loading="lazy">
+                        <img src="imagens/silmara.webp" alt="Silmara" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
                     </div>
                     <h3 class="font-marker text-2xl text-center">Silmara</h3>
                     <p class="font-hand font-bold text-teal-600 text-center text-lg mb-4">Português - "Superação"</p>
@@ -443,15 +418,14 @@
                     </div>
                 </div>
             </div>
-
             <!-- CARD: DAIANE GEO -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-1 relative bg-white p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
+                <div class="reveal-card rotate-var-1 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
-                        <img src="alfinete.webp" alt="Alfinete">
+                        <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
                     <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/daiane_geografia.webp" alt="Daiane Geo" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" loading="lazy">
+                        <img src="imagens/daiane_geografia.webp" alt="Daiane Geo" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
                     </div>
                     <h3 class="font-marker text-2xl text-center">Daiane</h3>
                     <p class="font-hand font-bold text-amber-700 text-center text-lg mb-4">Geografia - "Desanimador"</p>
@@ -466,15 +440,14 @@
                     </div>
                 </div>
             </div>
-
             <!-- CARD: LEONARDO -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-2 relative bg-white p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
+                <div class="reveal-card rotate-var-2 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
-                        <img src="alfinete.webp" alt="Alfinete">
+                        <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
                     <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/leonardo.webp" alt="Leonardo" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" loading="lazy">
+                        <img src="imagens/leonardo.webp" alt="Leonardo" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
                     </div>
                     <h3 class="font-marker text-2xl text-center">Leonardo</h3>
                     <p class="font-hand font-bold text-indigo-600 text-center text-lg mb-4">Filosofia - "Preguiça"</p>
@@ -489,15 +462,14 @@
                     </div>
                 </div>
             </div>
-
             <!-- CARD: GUSTAVO -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-3 relative bg-white p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
+                <div class="reveal-card rotate-var-3 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
-                        <img src="alfinete.webp" alt="Alfinete">
+                        <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
                     <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/gustavo.webp" alt="Gustavo" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" loading="lazy">
+                        <img src="imagens/gustavo.webp" alt="Gustavo" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
                     </div>
                     <h3 class="font-marker text-2xl text-center">Gustavo</h3>
                     <p class="font-hand font-bold text-cyan-700 text-center text-lg mb-4">Física - "Melhora"</p>
@@ -512,15 +484,14 @@
                     </div>
                 </div>
             </div>
-
             <!-- CARD: FABIANE -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-4 relative bg-white p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
+                <div class="reveal-card rotate-var-4 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
-                        <img src="alfinete.webp" alt="Alfinete">
+                        <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
                     <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/fabiane.webp" alt="Fabiane" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" loading="lazy">
+                        <img src="imagens/fabiane.webp" alt="Fabiane" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
                     </div>
                     <h3 class="font-marker text-2xl text-center">Fabiane</h3>
                     <p class="font-hand font-bold text-fuchsia-700 text-center text-lg mb-4">P. Comp - "Resistência"</p>
@@ -535,15 +506,14 @@
                     </div>
                 </div>
             </div>
-
             <!-- CARD: TADEU -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-1 relative bg-white p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
+                <div class="reveal-card rotate-var-1 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
                     <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
-                        <img src="alfinete.webp" alt="Alfinete">
+                        <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
                     <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/tadeu.webp" alt="Tadeu" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" loading="lazy">
+                        <img src="imagens/tadeu.webp" alt="Tadeu" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
                     </div>
                     <h3 class="font-marker text-2xl text-center">Tadeu</h3>
                     <p class="font-hand font-bold text-amber-800 text-center text-lg mb-4">História - "Regular"</p>
@@ -558,10 +528,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </main>
-
     <!-- Rodapé -->
     <footer class="py-12 text-center relative z-10 pointer-events-none">
         <div class="inline-block bg-[#fdfbf7] p-4 px-8 shadow-lg transform rotate-1 border-4 border-[#eaddcf] relative">
@@ -576,7 +544,6 @@
             </p>
         </div>
     </footer>
-
     <!-- Modal de Imagem Otimizado -->
     <div id="imageModal" onclick="closeModal()" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 opacity-0 transition-opacity duration-300">
         <div class="relative max-w-4xl w-full flex justify-center">
@@ -584,12 +551,10 @@
             <button class="absolute top-4 right-4 text-white text-xl font-bold bg-black/20 hover:bg-black/40 rounded-full w-10 h-10 flex items-center justify-center transition-colors">&times;</button>
         </div>
     </div>
-
     <script>
         /**
          * Script Otimizado para UI Interativa
          */
-
         // 1. Controle de "Ler Mais" Inteligente
         function toggleReadMore(id, btn) {
             const wrap = document.getElementById(id);
@@ -598,42 +563,40 @@
             wrap.classList.toggle('expanded');
             btn.textContent = isExpanded ? "Ler tudo..." : "Ler menos";
             
-            // Se fechar, scroll suave de volta para o card se estiver fora de vista
             if (isExpanded) {
                 wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         }
-
-        // Inicialização: esconde botões se o texto for curto
+        // Inicialização com requestAnimationFrame para não travar o load
         function initReadMore() {
-            const wraps = document.querySelectorAll('.read-more-wrap');
-            wraps.forEach(wrap => {
-                // Se o conteúdo for menor que a altura máxima inicial (160px), remove o botão
-                if (wrap.scrollHeight <= 170) { 
-                    wrap.classList.add('expanded'); // Tira o gradiente
-                    const btn = wrap.nextElementSibling;
-                    if (btn) btn.style.display = 'none';
-                }
+            requestAnimationFrame(() => {
+                const wraps = document.querySelectorAll('.read-more-wrap');
+                wraps.forEach(wrap => {
+                    if (wrap.scrollHeight <= 170) { 
+                        wrap.classList.add('expanded');
+                        const btn = wrap.nextElementSibling;
+                        if (btn) btn.style.display = 'none';
+                    }
+                });
             });
         }
-
         // 2. Modal de Imagem
         const modal = document.getElementById('imageModal');
         const modalImg = document.getElementById('modalImg');
-
         function openModal(container) {
             const img = container.querySelector('img');
+            // Evita abrir se não tiver src ou estiver quebrado
+            if(!img.src) return;
             modalImg.src = img.src;
             modal.classList.remove('hidden');
-            // Timeout para permitir renderização do DOM antes da transição CSS
+            
             requestAnimationFrame(() => {
                 modal.classList.remove('opacity-0');
                 modalImg.classList.remove('scale-90');
                 modalImg.classList.add('scale-100');
             });
-            document.body.style.overflow = 'hidden'; // Trava scroll do fundo
+            document.body.style.overflow = 'hidden'; 
         }
-
         function closeModal() {
             modal.classList.add('opacity-0');
             modalImg.classList.remove('scale-100');
@@ -641,46 +604,42 @@
             setTimeout(() => {
                 modal.classList.add('hidden');
                 modalImg.src = '';
-                document.body.style.overflow = ''; // Destrava scroll
+                document.body.style.overflow = '';
             }, 300);
         }
-
-        // 3. Animação de Scroll (Intersection Observer)
-        // Garante que os cards entrem na tela suavemente
+        // 3. Animação de Scroll (Intersection Observer Otimizado)
         const observerOptions = {
             root: null,
-            rootMargin: '0px',
+            rootMargin: '50px', // Começa a carregar um pouco antes de aparecer
             threshold: 0.1
         };
-
         const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    obs.unobserve(entry.target); // Para de observar após animar
+                    // Usa requestAnimationFrame para sincronizar com o renderizador
+                    requestAnimationFrame(() => {
+                        entry.target.classList.add('active');
+                    });
+                    obs.unobserve(entry.target);
                 }
             });
         }, observerOptions);
-
         document.addEventListener('DOMContentLoaded', () => {
             initReadMore();
             
-            // Ativa observador nos cards
             const cards = document.querySelectorAll('.reveal-card');
             cards.forEach((card, index) => {
-                // Adiciona delay sequencial para cards na mesma linha visual (aprox)
-                card.style.transitionDelay = `${(index % 3) * 100}ms`; 
+                // Reduzi o delay para ser mais ágil
+                card.style.transitionDelay = `${Math.min((index % 3) * 75, 300)}ms`; 
                 observer.observe(card);
             });
         });
-
-        // Re-calcular botões ao redimensionar tela (debounce simples)
+        // Debounce no resize
         let resizeTimer;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(initReadMore, 200);
+            resizeTimer = setTimeout(initReadMore, 300);
         });
-
     </script>
 </body>
 </html>
