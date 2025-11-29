@@ -6,624 +6,905 @@
     <meta name="description" content="Mural de opiniões dos professores da turma 1º A.">
     <title>Mural dos Professores | 1º A</title>
     
-    <!-- Tailwind CSS (v3.4) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        marker: ['Permanent Marker', 'cursive'],
-                        hand: ['Kalam', 'cursive'],
-                    },
-                    colors: {
-                        paper: '#fdfbf7',
-                        ink: '#2c3e50',
-                        cork: '#d2b48c'
-                    },
-                    boxShadow: {
-                        'polaroid': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-                        'floating': '0 25px 50px -12px rgba(0, 0, 0, 0.4)',
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-5px)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Fredericka+the+Great&family=Patrick+Hand&display=swap" rel="stylesheet">
+    
     <style>
-        /* Otimização de Renderização Global */
+        /* 
+           FEITO POR FELIPE VEÇOSKI 1°DS 
+           UI REFINADA E OTIMIZADA
+        */
+        
+        :root {
+            --cork-light: #e8d4b8;
+            --cork-dark: #c19a6b;
+            --paper-cream: #fefdfb;
+            --ink-dark: #1a1a2e;
+            --accent-gold: #d4a574;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
         html {
             scroll-behavior: smooth;
         }
+        
         body {
-            background-color: #c19a6b;
+            background-color: var(--cork-dark);
             background-image: url('fundo-cortica.webp');
             background-attachment: fixed; 
             background-size: 400px;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            /* transform: translateZ(0); REMOVIDO: Isso quebrava o modal fixo na tela */
+            font-family: 'Patrick Hand', cursive;
         }
-        /* Vinheta Cinemática */
+        
+        /* Overlay Elegante */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at top, transparent 0%, rgba(0,0,0,0.1) 100%),
+                radial-gradient(ellipse at bottom, rgba(0,0,0,0.3) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Vinheta Refinada */
         body::after {
             content: "";
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.4) 100%);
+            background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.35) 100%);
             pointer-events: none;
-            z-index: 0;
-        }
-        /* Scrollbar Personalizada */
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #d2b48c;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: #8b5a2b;
-            border-radius: 6px;
-            border: 3px solid #d2b48c;
-        }
-        /* Efeito de Papel Rasgado */
-        .torn-paper {
-            background-image: url('papel-pautado.webp'); 
-            background-size: 100% auto;
-            background-color: #fffdf0;
-            position: relative;
-            clip-path: polygon(
-                0% 0%, 100% 0%, 100% 98%, 
-                97% 99%, 94% 98%, 91% 99%, 88% 98%, 
-                85% 99%, 82% 98%, 79% 99%, 76% 98%, 
-                73% 99%, 70% 98%, 67% 99%, 64% 98%, 
-                61% 99%, 58% 98%, 55% 99%, 52% 98%, 
-                49% 99%, 46% 98%, 43% 99%, 40% 98%, 
-                37% 99%, 34% 98%, 31% 99%, 28% 98%, 
-                25% 99%, 22% 98%, 19% 99%, 16% 98%, 
-                13% 99%, 10% 98%, 7% 99%, 4% 98%, 
-                1% 99%, 0% 98%
-            );
-            transform: translateZ(0);
-        }
-        
-        /* Ruído Otimizado (SVG Data URI) */
-        .torn-paper::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-            pointer-events: none;
-            mix-blend-mode: multiply;
             z-index: 1;
         }
-        /* Texto Tinta */
-        .ink-text {
-            color: #1a202c;
-            mix-blend-mode: multiply; 
-            line-height: 1.6;
-            text-rendering: optimizeLegibility;
+        
+        /* Scrollbar Elegante */
+        ::-webkit-scrollbar {
+            width: 10px;
         }
-        /* 
-           Container dos Cards 
-           IMPORTANTE: Removido contain/content-visibility para evitar cortes nos alfinetes
-        */
-        .card-container {
-            perspective: 1000px;
+        ::-webkit-scrollbar-track {
+            background: linear-gradient(to bottom, #d2b48c, #c19a6b);
         }
-        .polaroid-wrap {
-            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
-            transform-style: preserve-3d;
-            will-change: transform;
-            background: white;
-            transform: translateZ(0);
-            backface-visibility: hidden;
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #8b6914, #6b4423);
+            border-radius: 10px;
+            border: 2px solid #d2b48c;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, #a67c00, #8b5a2b);
         }
         
-        /* Hover somente em desktop para performance */
+        /* Tipografia */
+        .font-title {
+            font-family: 'Fredericka the Great', cursive;
+        }
+        .font-handwriting {
+            font-family: 'Caveat', cursive;
+        }
+        .font-hand {
+            font-family: 'Patrick Hand', cursive;
+        }
+        
+        /* Card Polaroid Refinado */
+        .polaroid-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f6f0 100%);
+            box-shadow: 
+                0 4px 6px rgba(0,0,0,0.1),
+                0 10px 20px rgba(0,0,0,0.15),
+                0 25px 50px rgba(0,0,0,0.1),
+                inset 0 1px 0 rgba(255,255,255,0.9);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            will-change: transform, box-shadow;
+        }
+        
         @media (hover: hover) {
-            .polaroid-wrap:hover {
-                transform: scale(1.02) translateY(-10px) rotate(0deg) !important;
+            .polaroid-card:hover {
+                transform: translateY(-12px) rotate(0deg) scale(1.02) !important;
+                box-shadow: 
+                    0 20px 40px rgba(0,0,0,0.25),
+                    0 35px 60px rgba(0,0,0,0.15),
+                    inset 0 1px 0 rgba(255,255,255,0.9);
                 z-index: 50;
-                box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
             }
         }
-        /* Alfinete */
-        .pin-shadow {
-            filter: drop-shadow(3px 5px 3px rgba(0,0,0,0.4));
-            z-index: 20;
-            pointer-events: none;
+        
+        /* Papel Pautado Estilizado */
+        .paper-note {
+            background-image: url('papel-pautado.webp'); 
+            background-size: 100% auto;
+            background-color: #fffef9;
+            position: relative;
+            border-radius: 2px;
+            box-shadow: 
+                inset 0 0 30px rgba(0,0,0,0.03),
+                0 2px 8px rgba(0,0,0,0.08);
         }
-        /* Fita Adesiva OTIMIZADA (Sem backdrop-filter) */
-        .tape-strip {
-            background-color: rgba(255, 255, 255, 0.6); /* Opaco para ser leve */
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        
+        .paper-note::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #ffb6c1, #ff69b4);
+            opacity: 0.4;
+            border-radius: 2px 0 0 2px;
+        }
+        
+        /* Efeito de Papel Rasgado Suave */
+        .torn-edge {
+            clip-path: polygon(
+                0% 0%, 100% 0%, 100% 97%, 
+                98% 98%, 96% 97%, 94% 98%, 92% 97%, 90% 98%,
+                88% 97%, 86% 98%, 84% 97%, 82% 98%, 80% 97%,
+                78% 98%, 76% 97%, 74% 98%, 72% 97%, 70% 98%,
+                68% 97%, 66% 98%, 64% 97%, 62% 98%, 60% 97%,
+                58% 98%, 56% 97%, 54% 98%, 52% 97%, 50% 98%,
+                48% 97%, 46% 98%, 44% 97%, 42% 98%, 40% 97%,
+                38% 98%, 36% 97%, 34% 98%, 32% 97%, 30% 98%,
+                28% 97%, 26% 98%, 24% 97%, 22% 98%, 20% 97%,
+                18% 98%, 16% 97%, 14% 98%, 12% 97%, 10% 98%,
+                8% 97%, 6% 98%, 4% 97%, 2% 98%, 0% 97%
+            );
+        }
+        
+        /* Alfinete com Sombra */
+        .pin-element {
+            filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.4));
+            z-index: 30;
+            transition: transform 0.3s ease;
+        }
+        
+        .polaroid-card:hover .pin-element {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        /* Fita Adesiva Premium */
+        .tape {
+            background: linear-gradient(135deg, 
+                rgba(255,255,255,0.7) 0%, 
+                rgba(255,255,240,0.5) 50%,
+                rgba(255,255,255,0.6) 100%);
+            box-shadow: 
+                0 1px 3px rgba(0,0,0,0.1),
+                inset 0 1px 0 rgba(255,255,255,0.5);
             border: 1px solid rgba(255,255,255,0.3);
-            transform: rotate(-2deg);
         }
-        /* Rotações Variáveis */
-        .rotate-var-1 { --rotate-val: 2.5deg; }
-        .rotate-var-2 { --rotate-val: -2deg; }
-        .rotate-var-3 { --rotate-val: 1.5deg; }
-        .rotate-var-4 { --rotate-val: -3deg; }
-        /* Lógica Ler Mais */
-        .read-more-wrap {
+        
+        /* Texto Tinta Elegante */
+        .ink-text {
+            color: #2c3e50;
+            line-height: 1.7;
+            text-rendering: optimizeLegibility;
+        }
+        
+        /* Ler Mais Refinado */
+        .read-more-container {
             position: relative;
             overflow: hidden;
-            max-height: 160px;
-            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: max-height;
+            max-height: 150px;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .read-more-wrap.expanded {
+        
+        .read-more-container.expanded {
             max-height: 2000px;
         }
-        .read-more-wrap::after {
+        
+        .read-more-container::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 80px;
-            background: linear-gradient(to bottom, transparent, #fffdf0 90%);
+            height: 60px;
+            background: linear-gradient(to bottom, transparent, #fffef9 85%);
             pointer-events: none;
-            transition: opacity 0.3s;
+            transition: opacity 0.4s ease;
         }
-        .read-more-wrap.expanded::after {
+        
+        .read-more-container.expanded::after {
             opacity: 0;
         }
+        
         .read-more-btn {
-            font-family: 'Permanent Marker', cursive;
-            color: #c0392b;
-            font-size: 0.9rem;
+            font-family: 'Caveat', cursive;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #d35400;
             cursor: pointer;
-            text-align: right;
-            display: block;
-            margin-top: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.3s ease;
             user-select: none;
         }
-        /* Animação de Entrada (Scroll Reveal) */
+        
+        .read-more-btn:hover {
+            color: #e74c3c;
+            transform: translateX(3px);
+        }
+        
+        /* Animações de Entrada */
         .reveal-card {
             opacity: 0;
-            transform: translateY(40px) rotate(var(--rotate-val, 0deg)); 
-            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1.2);
-            will-change: opacity, transform;
+            transform: translateY(50px) rotate(var(--rotation, 0deg));
+            transition: 
+                opacity 0.7s ease-out,
+                transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         
         .reveal-card.active {
             opacity: 1;
-            transform: translateY(0) rotate(var(--rotate-val, 0deg));
+            transform: translateY(0) rotate(var(--rotation, 0deg));
+        }
+        
+        /* Variações de Rotação */
+        .rotate-1 { --rotation: 2deg; }
+        .rotate-2 { --rotation: -1.5deg; }
+        .rotate-3 { --rotation: 1deg; }
+        .rotate-4 { --rotation: -2.5deg; }
+        
+        /* Imagem Container */
+        .image-frame {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+        
+        .image-frame::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+            pointer-events: none;
+        }
+        
+        .image-frame img {
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .image-frame:hover img {
+            transform: scale(1.08);
+        }
+        
+        /* Header Especial */
+        .header-card {
+            background: linear-gradient(145deg, #ffffff 0%, #faf8f5 100%);
+            position: relative;
+            overflow: visible;
+        }
+        
+        .header-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, #d4a574, #c19a6b, #a67c52);
+            z-index: -1;
+            border-radius: inherit;
+        }
+        
+        /* Decoração de Estrelas */
+        .star-decoration {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.15;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.15; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.1); }
+        }
+        
+        /* Badge de Matéria */
+        .subject-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        /* Modal Refinado */
+        .modal-overlay {
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        
+        .modal-image {
+            border: 12px solid white;
+            border-radius: 4px;
+            box-shadow: 
+                0 25px 80px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(255,255,255,0.1);
+        }
+        
+        /* Footer Elegante */
+        .footer-card {
+            background: linear-gradient(145deg, #fffef9 0%, #f8f6f0 100%);
+        }
+        
+        /* Pulse Heart */
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.15); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.15); }
+        }
+        
+        .heart-pulse {
+            animation: heartbeat 1.5s ease-in-out infinite;
+            display: inline-block;
+        }
+        
+        /* Loading Shimmer */
+        .shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col relative text-stone-800">
-    <!-- Cabeçalho -->
-    <header class="relative z-20 pt-16 pb-10 px-4">
-        <div class="max-w-2xl mx-auto bg-[#fdfbf7] p-8 text-center shadow-xl transform -rotate-1 border-4 border-[#eaddcf] relative reveal-card active" style="--rotate-val: -1deg;">
-            
-            <!-- Fita Adesiva Topo -->
-            <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-10 tape-strip z-20"></div>
-            
-            <div class="absolute top-3 left-3 w-3 h-3 rounded-full bg-stone-300 shadow-inner border border-stone-400"></div>
-            <div class="absolute top-3 right-3 w-3 h-3 rounded-full bg-stone-300 shadow-inner border border-stone-400"></div>
-            <h1 class="text-4xl md:text-5xl font-marker text-stone-800 mb-3 tracking-wide drop-shadow-sm">
-                Nosso Mural
-            </h1>
-            <div class="h-0.5 w-40 mx-auto bg-stone-300 my-3 rounded-full"></div>
-            <p class="text-xl font-hand font-bold text-stone-600">
-                A opinião da equipe sobre o 1º Ano A
-            </p>
+    
+    <!-- Cabeçalho Premium -->
+    <header class="relative z-20 pt-20 pb-14 px-4">
+        <div class="max-w-2xl mx-auto">
+            <div class="header-card p-10 text-center shadow-2xl rounded-lg transform -rotate-1 reveal-card active relative" style="--rotation: -1deg;">
+                
+                <!-- Fita Adesiva Superior -->
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-36 h-10 tape rounded-sm transform -rotate-1 z-20"></div>
+                
+                <!-- Decorações -->
+                <span class="star-decoration top-4 left-6">✦</span>
+                <span class="star-decoration top-6 right-8" style="animation-delay: 1s;">✦</span>
+                <span class="star-decoration bottom-8 left-10" style="animation-delay: 0.5s;">✧</span>
+                <span class="star-decoration bottom-6 right-6" style="animation-delay: 1.5s;">✧</span>
+                
+                <!-- Furos decorativos -->
+                <div class="absolute top-4 left-4 w-3 h-3 rounded-full bg-gradient-to-br from-stone-200 to-stone-400 shadow-inner"></div>
+                <div class="absolute top-4 right-4 w-3 h-3 rounded-full bg-gradient-to-br from-stone-200 to-stone-400 shadow-inner"></div>
+                
+                <h1 class="text-5xl md:text-6xl font-title text-stone-800 mb-4 tracking-wide">
+                    Nosso Mural
+                </h1>
+                
+                <div class="flex items-center justify-center gap-3 my-4">
+                    <span class="h-px w-16 bg-gradient-to-r from-transparent via-stone-400 to-transparent"></span>
+                    <span class="text-2xl">📌</span>
+                    <span class="h-px w-16 bg-gradient-to-r from-transparent via-stone-400 to-transparent"></span>
+                </div>
+                
+                <p class="text-2xl font-handwriting font-semibold text-stone-600">
+                    A opinião da equipe sobre o 1º Ano A
+                </p>
+            </div>
         </div>
     </header>
     <!-- Mural Grid -->
-    <main class="flex-grow w-full max-w-[1600px] mx-auto px-6 sm:px-8 pb-24 relative z-10" style="overflow: visible;">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-10 gap-y-20 pt-12">
-            <!-- CARD 1: JOANA (Destaque) -->
-            <div class="card-container col-span-1 sm:col-span-2 lg:col-span-3 xl:col-span-4 flex justify-center mb-6">
-                <div class="reveal-card rotate-var-1 relative w-full max-w-4xl p-4 pb-16 shadow-polaroid polaroid-wrap flex flex-col md:flex-row gap-6">
-                    <!-- Alfinete -->
-                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-14 pin-shadow">
-                        <img src="alfinete.webp" width="56" height="56" alt="Alfinete" class="w-full h-auto block">
+    <main class="flex-grow w-full max-w-[1600px] mx-auto px-6 sm:px-10 pb-28 relative z-10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-12 gap-y-24 pt-8">
+            
+            <!-- CARD DESTAQUE: JOANA -->
+            <div class="col-span-1 sm:col-span-2 lg:col-span-3 xl:col-span-4 flex justify-center mb-8">
+                <div class="reveal-card rotate-1 relative w-full max-w-5xl p-6 pb-10 rounded-lg polaroid-card flex flex-col lg:flex-row gap-8">
+                    
+                    <!-- Alfinete Central -->
+                    <div class="absolute -top-7 left-1/2 -translate-x-1/2 w-14 pin-element">
+                        <img src="alfinete.webp" width="56" height="56" alt="Alfinete" class="w-full h-auto">
                     </div>
                     
-                    <div class="w-full md:w-1/3 shrink-0 flex flex-col">
-                        <div class="aspect-[4/5] bg-gray-100 border border-gray-200 shadow-inner overflow-hidden relative cursor-zoom-in group" onclick="openModal(this)">
-                            <!-- Loading Eager (LCP) -->
-                            <img src="imagens/joana.webp" alt="Joana" loading="eager" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105">
-                            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
+                    <!-- Seção da Foto -->
+                    <div class="w-full lg:w-1/3 shrink-0 flex flex-col">
+                        <div class="image-frame aspect-[4/5] rounded cursor-zoom-in" onclick="openModal(this)">
+                            <img src="imagens/joana.webp" alt="Joana" loading="eager" decoding="async" class="w-full h-full object-cover object-top">
                         </div>
-                        <div class="text-center mt-4">
-                            <p class="font-marker text-3xl text-stone-800">Joana</p>
-                            <p class="font-hand font-bold text-2xl text-stone-500">Pedagoga</p>
+                        <div class="text-center mt-5">
+                            <h2 class="font-title text-4xl text-stone-800">Joana</h2>
+                            <span class="subject-badge bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 mt-2">
+                                <span>📚</span> Pedagoga
+                            </span>
                         </div>
                     </div>
-                    <div class="w-full md:w-2/3 relative mt-2">
-                        <div class="torn-paper p-8 shadow-md transform rotate-1 h-full flex flex-col justify-center">
-                            <div class="read-more-wrap" id="wrap-joana">
-                                <div class="font-hand text-xl ink-text text-justify">
+                    
+                    <!-- Seção do Texto -->
+                    <div class="w-full lg:w-2/3">
+                        <div class="paper-note torn-edge p-8 transform rotate-1 h-full">
+                            <div class="read-more-container" id="wrap-joana">
+                                <p class="font-hand text-xl ink-text leading-relaxed text-justify">
                                     "Olá, sou a pedagoga Joana, pedagoga do 1º ano A. O que eu acho da turma do primeiro 1ºA? É uma turma bastante agitada, nova, bem novinha, imatura, adoram conversar, são desafiadores também, mas penso eu como sempre aliado a questão da idade, essa imaturidade para o próximo ano ela vai modificá-los, eles vão se tornar um pouco mais sérios, um pouco mais responsáveis. Não vejo a turma como sendo péssima, horrível, não, eu vejo eles como estudantes tentando se colocar, pela idade, por tudo, precisam crescer, precisam amadurecer, muitos estarão de manhã outros estarão à noite. E é uma turma que tem de tudo para ser a melhor, tem muita gente boa, tem gente que gosta de atrapalhar, mas é uma turma bacana, legal, de modo geral é uma turma boa. Não tenho nada contra alguém, acho que tudo é uma questão de idade, de crescimento, apesar de eu gostar de pegar no pé faz parte do meu trabalho, vejo todos de uma forma positiva, tem um ou outro que dá vontade de puxar uma orelha mais de perto, mas assim de modo geral tem gente bem bacana, bem legal, que eu não conheço infelizmente. A todos um abraço, obrigada."
-                                </div>
+                                </p>
                             </div>
-                            <div class="read-more-btn" onclick="toggleReadMore('wrap-joana', this)">Ler tudo...</div>
+                            <div class="mt-3 text-right">
+                                <span class="read-more-btn" onclick="toggleReadMore('wrap-joana', this)">
+                                    Ler tudo... →
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- CARD: PRISCILA -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-2 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
-                    <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
+                <div class="reveal-card rotate-2 relative p-4 pb-8 rounded-lg polaroid-card h-full flex flex-col">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 pin-element">
                         <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
-                    <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/priscila.webp" alt="Priscila" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                    <div class="image-frame aspect-square rounded mb-4 cursor-zoom-in" onclick="openModal(this)">
+                        <img src="imagens/priscila.webp" alt="Priscila" loading="lazy" decoding="async" class="w-full h-full object-cover object-top">
                     </div>
-                    <h3 class="font-marker text-2xl text-center">Priscila</h3>
-                    <p class="font-hand font-bold text-red-600 text-center text-lg mb-4">Matemática - "Evolução"</p>
+                    <h3 class="font-title text-2xl text-center text-stone-800">Priscila</h3>
+                    <div class="text-center my-3">
+                        <span class="subject-badge bg-gradient-to-r from-rose-100 to-pink-100 text-rose-700">
+                            <span>📐</span> Matemática
+                        </span>
+                    </div>
+                    <p class="font-handwriting text-2xl text-center font-bold text-emerald-600 mb-4">"Evolução"</p>
                     
-                    <div class="torn-paper p-5 flex-grow -mx-2 shadow-sm transform -rotate-1">
-                        <div class="read-more-wrap" id="wrap-priscila">
+                    <div class="paper-note torn-edge p-5 flex-grow transform -rotate-1">
+                        <div class="read-more-container" id="wrap-priscila">
                             <p class="font-hand text-lg ink-text">
                                 "Evolução porque no primeiro trimestre a gente teve uma enxurrada de notas vermelhas, notas abaixo da média. No segundo trimestre já melhorou bastante e no terceiro agora tá melhorando mais ainda, pelo primeiro bloco a gente já consegue ver que várias pessoas já estão na média, já vão conseguir passar de ano e eu fico muito feliz com isso também"
                             </p>
                         </div>
-                        <div class="read-more-btn" onclick="toggleReadMore('wrap-priscila', this)">Ler tudo...</div>
+                        <div class="mt-2 text-right">
+                            <span class="read-more-btn" onclick="toggleReadMore('wrap-priscila', this)">Ler tudo... →</span>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- CARD: DAYANE -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-3 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
-                    <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
+                <div class="reveal-card rotate-3 relative p-4 pb-8 rounded-lg polaroid-card h-full flex flex-col">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 pin-element">
                         <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
-                    <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/dayane_quimica.webp" alt="Dayane" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                    <div class="image-frame aspect-square rounded mb-4 cursor-zoom-in" onclick="openModal(this)">
+                        <img src="imagens/dayane_quimica.webp" alt="Dayane" loading="lazy" decoding="async" class="w-full h-full object-cover object-top">
                     </div>
-                    <h3 class="font-marker text-2xl text-center">Dayane</h3>
-                    <p class="font-hand font-bold text-blue-600 text-center text-lg mb-4">Química - "Média"</p>
+                    <h3 class="font-title text-2xl text-center text-stone-800">Dayane</h3>
+                    <div class="text-center my-3">
+                        <span class="subject-badge bg-gradient-to-r from-sky-100 to-blue-100 text-sky-700">
+                            <span>⚗️</span> Química
+                        </span>
+                    </div>
+                    <p class="font-handwriting text-2xl text-center font-bold text-amber-600 mb-4">"Média"</p>
                     
-                    <div class="torn-paper p-5 flex-grow -mx-2 shadow-sm transform rotate-1">
-                        <div class="read-more-wrap" id="wrap-dayane">
+                    <div class="paper-note torn-edge p-5 flex-grow transform rotate-1">
+                        <div class="read-more-container" id="wrap-dayane">
                             <p class="font-hand text-lg ink-text">
                                 "Porque sempre tem o que melhorar, então assim, pensando em um contexto geral a nota ela se mantém numa média, no caso a média da escola é 60 pontos, porque sempre tem o que melhorar"
                             </p>
                         </div>
-                        <div class="read-more-btn" onclick="toggleReadMore('wrap-dayane', this)">Ler tudo...</div>
+                        <div class="mt-2 text-right">
+                            <span class="read-more-btn" onclick="toggleReadMore('wrap-dayane', this)">Ler tudo... →</span>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- CARD: THAIS -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-4 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
-                    <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
+                <div class="reveal-card rotate-4 relative p-4 pb-8 rounded-lg polaroid-card h-full flex flex-col">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 pin-element">
                         <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
-                    <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/thais.webp" alt="Thais" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                    <div class="image-frame aspect-square rounded mb-4 cursor-zoom-in" onclick="openModal(this)">
+                        <img src="imagens/thais.webp" alt="Thais" loading="lazy" decoding="async" class="w-full h-full object-cover object-top">
                     </div>
-                    <h3 class="font-marker text-2xl text-center">Thaís</h3>
-                    <p class="font-hand font-bold text-purple-600 text-center text-lg mb-4">Inglês - "Decepção"</p>
+                    <h3 class="font-title text-2xl text-center text-stone-800">Thaís</h3>
+                    <div class="text-center my-3">
+                        <span class="subject-badge bg-gradient-to-r from-violet-100 to-purple-100 text-violet-700">
+                            <span>🇬🇧</span> Inglês
+                        </span>
+                    </div>
+                    <p class="font-handwriting text-2xl text-center font-bold text-red-500 mb-4">"Decepção"</p>
                     
-                    <div class="torn-paper p-5 flex-grow -mx-2 shadow-sm transform -rotate-1">
-                        <div class="read-more-wrap" id="wrap-thais">
+                    <div class="paper-note torn-edge p-5 flex-grow transform -rotate-1">
+                        <div class="read-more-container" id="wrap-thais">
                             <p class="font-hand text-lg ink-text">
                                 "Decepção é a palavra das notas de inglês do 1A, já que a grande maioria não entregou o trabalho que eu solicitei e os que entregaram, o trabalho estava muito simples e minimalista, então acho que eu fiquei decepcionada com a turma porque eu sei que é uma turma que tem um potencial muito maior e que não entregou tudo como deveriam"
                             </p>
                         </div>
-                        <div class="read-more-btn" onclick="toggleReadMore('wrap-thais', this)">Ler tudo...</div>
+                        <div class="mt-2 text-right">
+                            <span class="read-more-btn" onclick="toggleReadMore('wrap-thais', this)">Ler tudo... →</span>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- CARD: ALINE -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-1 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
-                    <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
+                <div class="reveal-card rotate-1 relative p-4 pb-8 rounded-lg polaroid-card h-full flex flex-col">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 pin-element">
                         <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
-                    <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/aline.webp" alt="Aline" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                    <div class="image-frame aspect-square rounded mb-4 cursor-zoom-in" onclick="openModal(this)">
+                        <img src="imagens/aline.webp" alt="Aline" loading="lazy" decoding="async" class="w-full h-full object-cover object-top">
                     </div>
-                    <h3 class="font-marker text-2xl text-center">Aline</h3>
-                    <p class="font-hand font-bold text-green-600 text-center text-lg mb-4">Ed. Física - "Boas"</p>
+                    <h3 class="font-title text-2xl text-center text-stone-800">Aline</h3>
+                    <div class="text-center my-3">
+                        <span class="subject-badge bg-gradient-to-r from-lime-100 to-green-100 text-lime-700">
+                            <span>⚽</span> Ed. Física
+                        </span>
+                    </div>
+                    <p class="font-handwriting text-2xl text-center font-bold text-green-600 mb-4">"Boas"</p>
                     
-                    <div class="torn-paper p-5 flex-grow -mx-2 shadow-sm transform rotate-1">
-                        <div class="read-more-wrap" id="wrap-aline">
+                    <div class="paper-note torn-edge p-5 flex-grow transform rotate-1">
+                        <div class="read-more-container" id="wrap-aline">
                             <p class="font-hand text-lg ink-text">
                                 "Porque na minha disciplina eles conseguem se desenvolver bem, de maneira geral. Então eles são bons"
                             </p>
                         </div>
-                        <div class="read-more-btn" onclick="toggleReadMore('wrap-aline', this)">Ler tudo...</div>
+                        <div class="mt-2 text-right">
+                            <span class="read-more-btn" onclick="toggleReadMore('wrap-aline', this)">Ler tudo... →</span>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- CARD: WENDELL -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-2 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
-                    <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
+                <div class="reveal-card rotate-2 relative p-4 pb-8 rounded-lg polaroid-card h-full flex flex-col">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 pin-element">
                         <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
-                    <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/wendell.webp" alt="Wendell" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                    <div class="image-frame aspect-square rounded mb-4 cursor-zoom-in" onclick="openModal(this)">
+                        <img src="imagens/wendell.webp" alt="Wendell" loading="lazy" decoding="async" class="w-full h-full object-cover object-top">
                     </div>
-                    <h3 class="font-marker text-2xl text-center">Wendell</h3>
-                    <p class="font-hand font-bold text-pink-600 text-center text-lg mb-4">Artes - "9,5"</p>
+                    <h3 class="font-title text-2xl text-center text-stone-800">Wendell</h3>
+                    <div class="text-center my-3">
+                        <span class="subject-badge bg-gradient-to-r from-fuchsia-100 to-pink-100 text-fuchsia-700">
+                            <span>🎨</span> Artes
+                        </span>
+                    </div>
+                    <p class="font-handwriting text-2xl text-center font-bold text-yellow-600 mb-4">"9,5"</p>
                     
-                    <div class="torn-paper p-5 flex-grow -mx-2 shadow-sm transform -rotate-1">
-                        <div class="read-more-wrap" id="wrap-wendell">
+                    <div class="paper-note torn-edge p-5 flex-grow transform -rotate-1">
+                        <div class="read-more-container" id="wrap-wendell">
                             <p class="font-hand text-lg ink-text">
                                 "Porque eles são perfeitos, uma das minhas turmas preferidas, só que as vezes, como toda turma, quer sair para ir no banheiro toda aula mas entendo porque é a última aula, sexta aula a nossa, mas eles são maravilhosos"
                             </p>
                         </div>
-                        <div class="read-more-btn" onclick="toggleReadMore('wrap-wendell', this)">Ler tudo...</div>
+                        <div class="mt-2 text-right">
+                            <span class="read-more-btn" onclick="toggleReadMore('wrap-wendell', this)">Ler tudo... →</span>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- CARD: JONATAN -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-3 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
-                    <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
+                <div class="reveal-card rotate-3 relative p-4 pb-8 rounded-lg polaroid-card h-full flex flex-col">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 pin-element">
                         <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
-                    <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/jonatan.webp" alt="Jonatan" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                    <div class="image-frame aspect-square rounded mb-4 cursor-zoom-in" onclick="openModal(this)">
+                        <img src="imagens/jonatan.webp" alt="Jonatan" loading="lazy" decoding="async" class="w-full h-full object-cover object-top">
                     </div>
-                    <h3 class="font-marker text-2xl text-center">Jonatan</h3>
-                    <p class="font-hand font-bold text-orange-600 text-center text-lg mb-4">Proj. Vida - "Desafio"</p>
+                    <h3 class="font-title text-2xl text-center text-stone-800">Jonatan</h3>
+                    <div class="text-center my-3">
+                        <span class="subject-badge bg-gradient-to-r from-orange-100 to-amber-100 text-orange-700">
+                            <span>🌱</span> Proj. Vida
+                        </span>
+                    </div>
+                    <p class="font-handwriting text-2xl text-center font-bold text-orange-600 mb-4">"Desafio"</p>
                     
-                    <div class="torn-paper p-5 flex-grow -mx-2 shadow-sm transform rotate-1">
-                        <div class="read-more-wrap" id="wrap-jonatan">
+                    <div class="paper-note torn-edge p-5 flex-grow transform rotate-1">
+                        <div class="read-more-container" id="wrap-jonatan">
                             <p class="font-hand text-lg ink-text">
                                 "É uma turma bastante agitada, é uma turma que leva bastante tempo pra conseguir estabelecer um certo controle para poder mediar o conteúdo, então por isso já meio que tiraria um ponto, por isso o 7,5 de 10, os outros desafios também é bastante conversa durante a aula, a conversa paralela, o contato, o sorrisinho, as divisas entre os grupos, acabam meio que dificultando o seguimento da aula, tem que ficar cortando o tempo todo o conteúdo, isso acaba afetando a concentração, acaba prejudicando a motivação da aula"
                             </p>
                         </div>
-                        <div class="read-more-btn" onclick="toggleReadMore('wrap-jonatan', this)">Ler tudo...</div>
+                        <div class="mt-2 text-right">
+                            <span class="read-more-btn" onclick="toggleReadMore('wrap-jonatan', this)">Ler tudo... →</span>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- CARD: SILMARA -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-4 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
-                    <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
+                <div class="reveal-card rotate-4 relative p-4 pb-8 rounded-lg polaroid-card h-full flex flex-col">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 pin-element">
                         <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
-                    <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/silmara.webp" alt="Silmara" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                    <div class="image-frame aspect-square rounded mb-4 cursor-zoom-in" onclick="openModal(this)">
+                        <img src="imagens/silmara.webp" alt="Silmara" loading="lazy" decoding="async" class="w-full h-full object-cover object-top">
                     </div>
-                    <h3 class="font-marker text-2xl text-center">Silmara</h3>
-                    <p class="font-hand font-bold text-teal-600 text-center text-lg mb-4">Português - "Superação"</p>
+                    <h3 class="font-title text-2xl text-center text-stone-800">Silmara</h3>
+                    <div class="text-center my-3">
+                        <span class="subject-badge bg-gradient-to-r from-teal-100 to-cyan-100 text-teal-700">
+                            <span>📝</span> Português
+                        </span>
+                    </div>
+                    <p class="font-handwriting text-2xl text-center font-bold text-teal-600 mb-4">"Superação"</p>
                     
-                    <div class="torn-paper p-5 flex-grow -mx-2 shadow-sm transform -rotate-1">
-                        <div class="read-more-wrap" id="wrap-silmara">
+                    <div class="paper-note torn-edge p-5 flex-grow transform -rotate-1">
+                        <div class="read-more-container" id="wrap-silmara">
                             <p class="font-hand text-lg ink-text">
                                 "Porque o que eu venho percebendo é que alguns alunos iniciaram assim mais devagar no começo do ano, não estavam assim com tanto vigor para fazer as plataformas, as atividades. E agora que a gente já tá na reta final, eu percebo que eles ficaram mais comprometidos, superaram aquelas dificuldades"
                             </p>
                         </div>
-                        <div class="read-more-btn" onclick="toggleReadMore('wrap-silmara', this)">Ler tudo...</div>
+                        <div class="mt-2 text-right">
+                            <span class="read-more-btn" onclick="toggleReadMore('wrap-silmara', this)">Ler tudo... →</span>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- CARD: DAIANE GEO -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-1 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
-                    <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
+                <div class="reveal-card rotate-1 relative p-4 pb-8 rounded-lg polaroid-card h-full flex flex-col">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 pin-element">
                         <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
-                    <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/daiane_geografia.webp" alt="Daiane Geo" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                    <div class="image-frame aspect-square rounded mb-4 cursor-zoom-in" onclick="openModal(this)">
+                        <img src="imagens/daiane_geografia.webp" alt="Daiane Geo" loading="lazy" decoding="async" class="w-full h-full object-cover object-top">
                     </div>
-                    <h3 class="font-marker text-2xl text-center">Daiane</h3>
-                    <p class="font-hand font-bold text-amber-700 text-center text-lg mb-4">Geografia - "Desanimador"</p>
+                    <h3 class="font-title text-2xl text-center text-stone-800">Daiane</h3>
+                    <div class="text-center my-3">
+                        <span class="subject-badge bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700">
+                            <span>🌍</span> Geografia
+                        </span>
+                    </div>
+                    <p class="font-handwriting text-2xl text-center font-bold text-stone-500 mb-4">"Desanimador"</p>
                     
-                    <div class="torn-paper p-5 flex-grow -mx-2 shadow-sm transform rotate-1">
-                        <div class="read-more-wrap" id="wrap-daiane">
+                    <div class="paper-note torn-edge p-5 flex-grow transform rotate-1">
+                        <div class="read-more-container" id="wrap-daiane">
                             <p class="font-hand text-lg ink-text">
                                 "Porque acho que falta muito interesse dos alunos, sabe? Em melhorar, em levar o estudo a sério, em entregar as coisas no dia, em se interessar pelo estudo, eu acho que muitos só estão vindo só de corpo assim, sabe, esquecendo de estar dentro do colégio, eles ficam pensando no lá fora e não tem muita responsabilidade com o estudo e isso desanima o professor, porque ele quer dar uma boa aula, ele quer melhorar e ninguém se interessa e daí isso desanima"
                             </p>
                         </div>
-                        <div class="read-more-btn" onclick="toggleReadMore('wrap-daiane', this)">Ler tudo...</div>
+                        <div class="mt-2 text-right">
+                            <span class="read-more-btn" onclick="toggleReadMore('wrap-daiane', this)">Ler tudo... →</span>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- CARD: LEONARDO -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-2 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
-                    <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
+                <div class="reveal-card rotate-2 relative p-4 pb-8 rounded-lg polaroid-card h-full flex flex-col">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 pin-element">
                         <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
-                    <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/leonardo.webp" alt="Leonardo" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                    <div class="image-frame aspect-square rounded mb-4 cursor-zoom-in" onclick="openModal(this)">
+                        <img src="imagens/leonardo.webp" alt="Leonardo" loading="lazy" decoding="async" class="w-full h-full object-cover object-top">
                     </div>
-                    <h3 class="font-marker text-2xl text-center">Leonardo</h3>
-                    <p class="font-hand font-bold text-indigo-600 text-center text-lg mb-4">Filosofia - "Preguiça"</p>
+                    <h3 class="font-title text-2xl text-center text-stone-800">Leonardo</h3>
+                    <div class="text-center my-3">
+                        <span class="subject-badge bg-gradient-to-r from-indigo-100 to-blue-100 text-indigo-700">
+                            <span>🤔</span> Filosofia
+                        </span>
+                    </div>
+                    <p class="font-handwriting text-2xl text-center font-bold text-indigo-600 mb-4">"Preguiça"</p>
                     
-                    <div class="torn-paper p-5 flex-grow -mx-2 shadow-sm transform -rotate-1">
-                        <div class="read-more-wrap" id="wrap-leonardo">
+                    <div class="paper-note torn-edge p-5 flex-grow transform -rotate-1">
+                        <div class="read-more-container" id="wrap-leonardo">
                             <p class="font-hand text-lg ink-text">
                                 "É uma turma que demonstra ser muito competente, as pessoas são inteligentes, são capazes, mas as vezes deixam de fazer as atividades, eles preferem conversar, preferem brincar e aí as vezes deixam as coisas para fazer e por isso a nota acaba ficando para muitas pessoas menor, mas é uma turma muito capaz e eu tenho confiança e gosto bastante deles"
                             </p>
                         </div>
-                        <div class="read-more-btn" onclick="toggleReadMore('wrap-leonardo', this)">Ler tudo...</div>
+                        <div class="mt-2 text-right">
+                            <span class="read-more-btn" onclick="toggleReadMore('wrap-leonardo', this)">Ler tudo... →</span>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- CARD: GUSTAVO -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-3 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
-                    <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
+                <div class="reveal-card rotate-3 relative p-4 pb-8 rounded-lg polaroid-card h-full flex flex-col">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 pin-element">
                         <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
-                    <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/gustavo.webp" alt="Gustavo" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                    <div class="image-frame aspect-square rounded mb-4 cursor-zoom-in" onclick="openModal(this)">
+                        <img src="imagens/gustavo.webp" alt="Gustavo" loading="lazy" decoding="async" class="w-full h-full object-cover object-top">
                     </div>
-                    <h3 class="font-marker text-2xl text-center">Gustavo</h3>
-                    <p class="font-hand font-bold text-cyan-700 text-center text-lg mb-4">Física - "Melhora"</p>
+                    <h3 class="font-title text-2xl text-center text-stone-800">Gustavo</h3>
+                    <div class="text-center my-3">
+                        <span class="subject-badge bg-gradient-to-r from-cyan-100 to-sky-100 text-cyan-700">
+                            <span>⚡</span> Física
+                        </span>
+                    </div>
+                    <p class="font-handwriting text-2xl text-center font-bold text-cyan-600 mb-4">"Melhora"</p>
                     
-                    <div class="torn-paper p-5 flex-grow -mx-2 shadow-sm transform rotate-1">
-                        <div class="read-more-wrap" id="wrap-gustavo">
+                    <div class="paper-note torn-edge p-5 flex-grow transform rotate-1">
+                        <div class="read-more-container" id="wrap-gustavo">
                             <p class="font-hand text-lg ink-text">
                                 "As notas melhoraram muito. A turma no começo do ano acreditava que o Ensino Médio seria uma coisa mais simples, o que não é. E a turma entendeu que precisa de muito mais esforço que vinha tendo antes, então eu acredito que seja isso que fez a turma melhorar, e muito as notas"
                             </p>
                         </div>
-                        <div class="read-more-btn" onclick="toggleReadMore('wrap-gustavo', this)">Ler tudo...</div>
+                        <div class="mt-2 text-right">
+                            <span class="read-more-btn" onclick="toggleReadMore('wrap-gustavo', this)">Ler tudo... →</span>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- CARD: FABIANE -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-4 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
-                    <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
+                <div class="reveal-card rotate-4 relative p-4 pb-8 rounded-lg polaroid-card h-full flex flex-col">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 pin-element">
                         <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
-                    <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/fabiane.webp" alt="Fabiane" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                    <div class="image-frame aspect-square rounded mb-4 cursor-zoom-in" onclick="openModal(this)">
+                        <img src="imagens/fabiane.webp" alt="Fabiane" loading="lazy" decoding="async" class="w-full h-full object-cover object-top">
                     </div>
-                    <h3 class="font-marker text-2xl text-center">Fabiane</h3>
-                    <p class="font-hand font-bold text-fuchsia-700 text-center text-lg mb-4">P. Comp - "Resistência"</p>
+                    <h3 class="font-title text-2xl text-center text-stone-800">Fabiane</h3>
+                    <div class="text-center my-3">
+                        <span class="subject-badge bg-gradient-to-r from-purple-100 to-fuchsia-100 text-purple-700">
+                            <span>💻</span> P. Comp
+                        </span>
+                    </div>
+                    <p class="font-handwriting text-2xl text-center font-bold text-purple-600 mb-4">"Resistência"</p>
                     
-                    <div class="torn-paper p-5 flex-grow -mx-2 shadow-sm transform -rotate-1">
-                        <div class="read-more-wrap" id="wrap-fabiane">
+                    <div class="paper-note torn-edge p-5 flex-grow transform -rotate-1">
+                        <div class="read-more-container" id="wrap-fabiane">
                             <p class="font-hand text-lg ink-text">
                                 "Porque os alunos, eles tem uma resistência em aprender o pensamento computacional, novas formas de programas que vem dentro desse componente, então as notas deles são razoáveis porque eles atingem a meta mas o aprendizado é um ou outro que leva daí"
                             </p>
                         </div>
-                        <div class="read-more-btn" onclick="toggleReadMore('wrap-fabiane', this)">Ler tudo...</div>
+                        <div class="mt-2 text-right">
+                            <span class="read-more-btn" onclick="toggleReadMore('wrap-fabiane', this)">Ler tudo... →</span>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- CARD: TADEU -->
             <div class="card-container">
-                <div class="reveal-card rotate-var-1 relative p-3 pb-12 shadow-polaroid polaroid-wrap h-full flex flex-col">
-                    <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-12 pin-shadow">
+                <div class="reveal-card rotate-1 relative p-4 pb-8 rounded-lg polaroid-card h-full flex flex-col">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 pin-element">
                         <img src="alfinete.webp" alt="Alfinete" width="48" height="48">
                     </div>
-                    <div class="aspect-square bg-gray-100 overflow-hidden border border-gray-200 mb-3 cursor-zoom-in group" onclick="openModal(this)">
-                        <img src="imagens/tadeu.webp" alt="Tadeu" loading="lazy" decoding="async" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+                    <div class="image-frame aspect-square rounded mb-4 cursor-zoom-in" onclick="openModal(this)">
+                        <img src="imagens/tadeu.webp" alt="Tadeu" loading="lazy" decoding="async" class="w-full h-full object-cover object-top">
                     </div>
-                    <h3 class="font-marker text-2xl text-center">Tadeu</h3>
-                    <p class="font-hand font-bold text-amber-800 text-center text-lg mb-4">História - "Regular"</p>
+                    <h3 class="font-title text-2xl text-center text-stone-800">Tadeu</h3>
+                    <div class="text-center my-3">
+                        <span class="subject-badge bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700">
+                            <span>📜</span> História
+                        </span>
+                    </div>
+                    <p class="font-handwriting text-2xl text-center font-bold text-amber-700 mb-4">"Regular"</p>
                     
-                    <div class="torn-paper p-5 flex-grow -mx-2 shadow-sm transform rotate-1">
-                        <div class="read-more-wrap" id="wrap-tadeu">
+                    <div class="paper-note torn-edge p-5 flex-grow transform rotate-1">
+                        <div class="read-more-container" id="wrap-tadeu">
                             <p class="font-hand text-lg ink-text">
                                 "Porque a maioria dos alunos, alguns são interessados, outros nem tanto interessados e isso dificulta o aprendizado da maioria dos alunos, por isso que é uma turma regular"
                             </p>
                         </div>
-                        <div class="read-more-btn" onclick="toggleReadMore('wrap-tadeu', this)">Ler tudo...</div>
+                        <div class="mt-2 text-right">
+                            <span class="read-more-btn" onclick="toggleReadMore('wrap-tadeu', this)">Ler tudo... →</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-    <!-- Rodapé -->
-    <footer class="py-12 text-center relative z-10 pointer-events-none">
-        <div class="inline-block bg-[#fdfbf7] p-4 px-8 shadow-lg transform rotate-1 border-4 border-[#eaddcf] relative">
-            <!-- Fita Adesiva Rodapé -->
-            <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-8 tape-strip"></div>
+    <!-- Rodapé Elegante -->
+    <footer class="py-16 text-center relative z-10">
+        <div class="inline-block footer-card p-6 px-10 shadow-xl rounded-lg transform rotate-1 border-4 border-stone-200/50 relative">
             
-            <p class="text-xl text-stone-700 font-hand font-bold">
-                Feito com Amor <span class="text-red-500 animate-pulse">❤</span> pela turma 1º A.
+            <!-- Fita Adesiva -->
+            <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-28 h-9 tape rounded-sm"></div>          
+ <p class="text-2xl text-stone-700 font-handwriting font-semibold">
+                Feito com Amor <span class="heart-pulse text-red-500 text-3xl">❤</span> pela turma 1º A
             </p>
         </div>
     </footer>
-    <!-- Modal de Imagem Otimizado -->
-    <div id="imageModal" onclick="closeModal()" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 opacity-0 transition-opacity duration-300">
-        <div class="relative max-w-4xl w-full flex justify-center">
-            <img id="modalImg" src="" class="max-h-[90vh] max-w-full rounded shadow-[0_0_50px_rgba(0,0,0,0.5)] border-8 border-white transform scale-90 transition-transform duration-300 cursor-zoom-out object-contain bg-stone-200">
-            <button class="absolute top-4 right-4 text-white text-xl font-bold bg-black/20 hover:bg-black/40 rounded-full w-10 h-10 flex items-center justify-center transition-colors">&times;</button>
+    <!-- Modal de Imagem Premium -->
+    <div id="imageModal" onclick="closeModal()" class="fixed inset-0 z-[100] hidden items-center justify-center modal-overlay p-6 opacity-0 transition-all duration-400">
+        <button class="absolute top-6 right-6 text-white/80 hover:text-white text-4xl font-light transition-colors z-10" aria-label="Fechar">
+            ×
+        </button>
+        <div class="relative max-w-5xl w-full flex justify-center">
+            <img id="modalImg" src="" alt="Imagem ampliada" class="modal-image max-h-[85vh] max-w-full object-contain transform scale-90 transition-transform duration-400 cursor-zoom-out">
         </div>
     </div>
     <script>
         /**
          * Script Otimizado para UI Interativa
+         * Por Felipe Veçoski
          */
-        // 1. Controle de "Ler Mais" Inteligente
+        // Controle de "Ler Mais"
         function toggleReadMore(id, btn) {
             const wrap = document.getElementById(id);
             const isExpanded = wrap.classList.contains('expanded');
             
             wrap.classList.toggle('expanded');
-            btn.textContent = isExpanded ? "Ler tudo..." : "Ler menos";
+            btn.innerHTML = isExpanded ? "Ler tudo... →" : "← Ler menos";
             
             if (isExpanded) {
                 wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         }
-        // Inicialização com requestAnimationFrame para não travar o load
+        // Inicialização inteligente do Ler Mais
         function initReadMore() {
             requestAnimationFrame(() => {
-                const wraps = document.querySelectorAll('.read-more-wrap');
-                wraps.forEach(wrap => {
-                    if (wrap.scrollHeight <= 170) { 
+                document.querySelectorAll('.read-more-container').forEach(wrap => {
+                    if (wrap.scrollHeight <= 160) {
                         wrap.classList.add('expanded');
-                        const btn = wrap.nextElementSibling;
+                        const btn = wrap.parentElement.querySelector('.read-more-btn');
                         if (btn) btn.style.display = 'none';
                     }
                 });
             });
         }
-        // 2. Modal de Imagem
+        // Modal de Imagem
         const modal = document.getElementById('imageModal');
         const modalImg = document.getElementById('modalImg');
         function openModal(container) {
             const img = container.querySelector('img');
-            // Evita abrir se não tiver src ou estiver quebrado
-            if(!img.src) return;
+            if (!img?.src) return;
+            
             modalImg.src = img.src;
             modal.classList.remove('hidden');
+            modal.classList.add('flex');
             
             requestAnimationFrame(() => {
                 modal.classList.remove('opacity-0');
                 modalImg.classList.remove('scale-90');
                 modalImg.classList.add('scale-100');
             });
-            document.body.style.overflow = 'hidden'; 
+            
+            document.body.style.overflow = 'hidden';
         }
         function closeModal() {
             modal.classList.add('opacity-0');
             modalImg.classList.remove('scale-100');
             modalImg.classList.add('scale-90');
+            
             setTimeout(() => {
                 modal.classList.add('hidden');
+                modal.classList.remove('flex');
                 modalImg.src = '';
                 document.body.style.overflow = '';
-            }, 300);
+            }, 400);
         }
-        // 3. Animação de Scroll (Intersection Observer Otimizado)
+        // Fechar modal com ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+        // Animação de Scroll com Intersection Observer
         const observerOptions = {
             root: null,
-            rootMargin: '50px', // Começa a carregar um pouco antes de aparecer
+            rootMargin: '0px 0px -50px 0px',
             threshold: 0.1
         };
-        const observer = new IntersectionObserver((entries, obs) => {
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Usa requestAnimationFrame para sincronizar com o renderizador
                     requestAnimationFrame(() => {
                         entry.target.classList.add('active');
                     });
-                    obs.unobserve(entry.target);
+                    observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
+        // Inicialização
         document.addEventListener('DOMContentLoaded', () => {
             initReadMore();
             
-            const cards = document.querySelectorAll('.reveal-card');
-            cards.forEach((card, index) => {
-                // Reduzi o delay para ser mais ágil
-                card.style.transitionDelay = `${Math.min((index % 3) * 75, 300)}ms`; 
+            document.querySelectorAll('.reveal-card').forEach((card, index) => {
+                // Delay escalonado para efeito cascata
+                card.style.transitionDelay = `${(index % 4) * 100}ms`;
                 observer.observe(card);
             });
         });
@@ -631,7 +912,7 @@
         let resizeTimer;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(initReadMore, 300);
+            resizeTimer = setTimeout(initReadMore, 250);
         });
     </script>
 </body>
