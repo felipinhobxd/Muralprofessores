@@ -55,7 +55,7 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            transform: translateZ(0); /* Camada de composição */
+            /* transform: translateZ(0); REMOVIDO: Isso quebrava o modal fixo na tela */
         }
         /* Vinheta Cinemática */
         body::after {
@@ -635,6 +635,4 @@
         });
     </script>
 </body>
-
 </html>
-
